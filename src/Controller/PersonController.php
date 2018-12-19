@@ -2,18 +2,34 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\Person;
+use App\Entity\ShareGroup;
 use Symfony\Component\Routing\Annotation\Route;
 
-class PersonController extends AbstractController
+/**
+ * Class PersonController
+ * @package App\Controller
+ * @Route("/person")
+ */
+class PersonController extends BaseController
 {
     /**
-     * @Route("/person", name="person")
+     * @Route("/group/{slug}", name="person", methods="GET")
      */
-    public function index()
+    public function index(ShareGroup $shareGroup)
     {
-        return $this->render('person/index.html.twig', [
-            'controller_name' => 'PersonController',
-        ]);
+
+        $persons = $this->getDoctrine()->getRepository(Person::class)
+            ->createQueryBuilder('p')
+            ->select('p', 'e')
+            ->leftJoin('p.expenses', 'e')
+            ->where('p.shareGroup = :group')
+            ->setParameter(':group' , $shareGroup)
+            ->getQuery()
+            ->getArrayResult()
+            ;
+
+        return $this->json($persons);
+
     }
 }
