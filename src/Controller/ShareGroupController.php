@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Expense;
 use App\Entity\ShareGroup;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,15 +12,18 @@ use Symfony\Component\Routing\Annotation\Route;
 class ShareGroupController extends BaseController
 {
     /**
-     * @Route("/{slug}", name="sharegroup_get")
+     * @Route("/{slug}", name="sharegroup_get", methods="GET")
      */
     public function index(ShareGroup $shareGroup)
     {
-//        $group = $this->getDoctrine()->getRepository(Expense::class)
-//            ->createQueryBuilder('g')
-//            ->join('g.person', 'p')
+        $group = $this->getDoctrine()->getRepository(ShareGroup::class)
+            ->createQueryBuilder('g')
+            ->where('g.id = :id')
+            ->setParameter(':id', $shareGroup->getId())
+            ->getQuery()
+            ->getArrayResult();
 
-        return $this->json($this->serialize($shareGroup));
+        return $this->json($group[0]);
     }
 
     /**

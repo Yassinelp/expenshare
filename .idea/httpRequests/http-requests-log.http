@@ -1,3 +1,35 @@
+GET http://localhost:8888/php/expenshare/public/sharegroup/
+Accept: */*
+x-Requested-With: XMLHttpRequest: no-cache
+
+<> 2018-12-19T030432.404.html
+
+###
+
+GET http://localhost:8888/php/expenshare/public/sharegroup/week-end-paris
+Accept: */*
+x-Requested-With: XMLHttpRequest: no-cache
+
+<> 2018-12-19T030414.404.html
+
+###
+
+GET http://localhost:8888/php/expenshare/public/sharegroup/
+Accept: */*
+x-Requested-With: XMLHttpRequest: no-cache
+
+<> 2018-12-19T024008.404.html
+
+###
+
+GET http://localhost:8888/php/expenshare/public/sharegroup/week-end-paris
+Accept: */*
+x-Requested-With: XMLHttpRequest: no-cache
+
+<> 2018-12-19T023954.404.html
+
+###
+
 GET http://localhost:8888/php/expenshare/public/sharegroup/week-end-paris
 Accept: */*
 x-Requested-With: XMLHttpRequest: no-cache

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Person;
 use App\Entity\ShareGroup;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -31,5 +32,29 @@ class PersonController extends BaseController
 
         return $this->json($persons);
 
+    }
+
+    /**
+     * @Route("/", name="person_new", methods="POST")
+     */
+    public function new(Request $request)
+    {
+        $data = $request->getContent();
+
+        $jsonData = json_decode($data, true);
+
+        $em = $this->getDoctrine()->getManager();
+
+        $shareGroup = $em->getRepository(ShareGroup::class)->findOneBySlug($jsonData["slug"]);
+
+        $person = new Person();
+        $person->setFirstname($jsonData["firstname"]);
+        $person->setLastname($jsonData["lastname"]);
+        $person->setShareGroup($shareGroup);
+
+        $em->persist($person);
+        $em->flush();
+
+        return $this->json($person);
     }
 }
