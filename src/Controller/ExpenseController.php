@@ -24,8 +24,8 @@ class ExpenseController extends BaseController
         $expenses = $this->getDoctrine()->getRepository(Expense::class)
             ->createQueryBuilder('e')
             ->select('e', 'p', 'c')
-            ->leftJoin('e.person', 'p')
-            ->leftJoin('e.category', 'c')
+            ->innerJoin('e.person', 'p')
+            ->innerJoin('e.category', 'c')
             ->where('p.shareGroup = :group')
             ->setParameter(':group' , $shareGroup)
             ->getQuery()
@@ -36,7 +36,7 @@ class ExpenseController extends BaseController
     }
 
     /**
-     * @Route("/", name="person_new", methods="POST")
+     * @Route("/", name="expense_new", methods="POST")
      */
     public function new(Request $request)
     {
@@ -46,7 +46,7 @@ class ExpenseController extends BaseController
 
         $em = $this->getDoctrine()->getManager();
 
-        $category = $em->getRepository(Category::class)->find($jsonData["category"]);
+        $category = $em->getRepository(Category::class)->find($jsonData["cat"]);
         $person = $em->getRepository(Person::class)->find($jsonData["person"]);
 
         $expense = new Expense();
